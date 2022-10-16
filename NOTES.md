@@ -38,3 +38,7 @@
 `npx prisma format` => #format prisma schema, add relation between user and post (example)
 
 `npx prisma migrate dev --name (single model created example("Post"))`
+
+## Delete commit hook
+
+`git reset --soft HEAD^`
