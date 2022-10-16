@@ -25,6 +25,10 @@
 
 `yarn add -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom`
 
+## Husky
+
+`yarn add -D husky, npx husky install `
+
 ## Prisma
 
 `npx prisma init`
