@@ -17,7 +17,6 @@
 - nodemailer - Sending OTP emails
 - Next.js
 - TailwindCSS
-- Jotai
 - Typescript
 - Tailwind CSS
 - React Hook Form

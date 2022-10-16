@@ -21,6 +21,10 @@
 
 ` "lint": "next lint", "eslint": "eslint . --fix"`
 
+## Jest and React Testing Library
+
+`yarn add -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom`
+
 ## Prisma
 
 `npx prisma init`
