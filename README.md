@@ -1,34 +1,117 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# tRPC with Next.js, TypeScript & Prisma
 
-## Getting Started
+![Captura de la app](src/public/images/trpc.jpeg)
 
-First, run the development server:
+## Why you should be learning & using tRPC
 
-```bash
-npm run dev
-# or
-yarn dev
+- Making E2E type-safe APIs is fun and easy
+- Gives you a deeper understanding of Next.js
+- Going to be very popular (prediction)
+
+## Technologies used
+
+- tRPC
+- TypeScript
+- Prisma (Postgres)
+- Zod - Schema validation & type generation
+- nodemailer - Sending OTP emails
+- Next.js
+- TailwindCSS
+- Jotai
+- Typescript
+- Tailwind CSS
+- React Hook Form
+- React Query
+- React Icons
+- React Toastify
+- React Testing Library
+- SuperJSON
+- JSON Web Token
+- ESLint
+- Prettier
+- Husky
+- Jest
+- Prisma
+- MongoDB
+- Docker
+
+[See the aplication](https://meru-ecommerce.vercel.app/) 👀
+
+## Welcome! 👋
+
+\*\* Frontend Technologies 🛠
+
+# Next.js Coffee Shop
+
+for run in local you need the local database
+
+```
+docker-compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- MongoDB URL Local:
+  yarn install
+  yarn dev
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+  mongodb://localhost:27017/coffee-shop
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## fill the database for test with dummy data
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+  http://localhost:3000/api/seed
+```
 
-## Learn More
+## Pre-requirements 📋
 
-To learn more about Next.js, take a look at the following resources:
+- Node
+- Npm
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Run app " Development " ⚙️
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+1.- npm install or yarn install
+2.- npm run dev or yarn dev  --Mode development
+```
 
-## Deploy on Vercel
+## Run app " Production " 🚀
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+1.- npm install or yarn install
+2.- npm run build or yarn build
+3.- npm run start or yarn start  --Mode production
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deployment 📦
+
+- [Vercel](https://vercel.com/) - Vercel
+
+_Tools I've used in this project_
+
+- [React](https://es.reactjs.org/) - React
+- [NextJs](https://nextjs.org/) - NextJs
+- [Next Auth](https://next-auth.js.org/) - Next Auth
+- [Axios](https://axios-http.com/) - Axios
+- [React Query](https://react-query-v3.tanstack.com/) - React Query
+- [React Hook Form](https://react-hook-form.com/) - React Hook Form
+- [React Icons](https://react-icons.github.io/react-icons/) - React Icons
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction) - React Toastify
+- [React Spinners](https://www.npmjs.com/package/react-spinners) - React Spinners
+- [Tailwind](https://tailwindcss.com/) - Tailwind
+- [Express JS](https://expressjs.com/) - Express JS
+- [MongoDB](https://www.mongodb.com/) - MongoDB
+- [Prisma](https://www.prisma.io/) - Prisma ORM
+- [Typescript](https://www.typescriptlang.org/) - Typescript
+- [Zod](https://zod.dev/) - Zod
+- [React Testing Library](https://testing-library.com/) - React Testing Library
+
+## Author ✒️
+
+_Developed by_
+
+- **Ismael JDz7** - _Frontend-Developer_ - [IsmaelJdz7](https://github.com/IsmaelJDz)
+
+---
+
+⌨️ with ❤️ by [IsmaelJDz7](https://github.com/IsmaelJDz) 😊
