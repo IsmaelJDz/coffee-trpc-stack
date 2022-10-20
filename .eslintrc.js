@@ -3,31 +3,51 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['plugin:react/recommended', 'standard'],
-  parser: '@typescript-eslint/parser',
+  extends: ["plugin:react/recommended", "standard"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: "latest",
+    sourceType: "module"
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ["react", "@typescript-eslint"],
   rules: {
-    semi: ['error', 'always', { omitLastInOneLineBlock: true }],
-    'space-before-function-paren': 'off',
-    'comma-dangle': ['warn', 'only-multiline'],
-    'max-len': [
-      'error',
+    quotes: ["error", "double"],
+    semi: ["error", "always", { omitLastInOneLineBlock: true }],
+    "space-before-function-paren": "off",
+    "comma-dangle": ["warn", "only-multiline"],
+    "max-len": [
+      "error",
       {
-        code: 80,
+        code: 120,
         tabWidth: 2,
         ignoreComments: true,
         ignoreStrings: true,
         comments: 65,
         ignoreUrls: true
       }
-    ]
+    ],
+    "sort-imports": [
+      "warn",
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: false,
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
+        allowSeparatedGroups: false
+      }
+    ],
+    "import/no-duplicates": [
+      "error",
+      {
+        considerQueryString: true
+      }
+    ],
+    "no-undef": "warn",
+    "n/handle-callback-err": "warn",
+    "@typescript-eslint/no-empty-interface": "warn"
   },
   globals: {
     React: true,

@@ -4,7 +4,7 @@
 
 ## Install dependencies
 
-`yarn add @trpc/client @trpc/server @trpc/react @trpc/next zod react-query superjson jotai @prisma/client react-hook-form jsonwebtoken cookie nodemailer`
+`yarn add @trpc/client @trpc/server @trpc/react @trpc/next zod react-query superjson jotai @prisma/client react-hook-form jsonwebtoken cookie nodemailer next-auth`
 
 `yarn add @types/jsonwebtoken @types/cookie @types/nodemailer -D`
 

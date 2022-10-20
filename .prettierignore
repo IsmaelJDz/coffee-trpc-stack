@@ -1,0 +1,4 @@
+node_modules
+.next
+public/mainfest.json
+public/browserconfig.json
