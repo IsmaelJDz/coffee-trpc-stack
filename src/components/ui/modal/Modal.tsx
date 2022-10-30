@@ -1,7 +1,8 @@
+import cn from "classnames";
 import { FC, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+
 import { Portal } from "@/components/ui/portal";
-import cn from "classnames";
 
 type Size = "xs" | "md" | "lg" | "xl" | "none" | "pictures" | "default";
 

@@ -14,7 +14,7 @@ module.exports = {
     /**
      * Automatic detection
      */
-    localeDetection: true,
+    localeDetection: false,
 
     localePath: path.resolve("./public/locales")
   }

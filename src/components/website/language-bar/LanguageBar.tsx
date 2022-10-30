@@ -1,6 +1,7 @@
-import React from "react";
-import { setCookie } from "@/utils/index";
 import { useRouter } from "next/router";
+import React from "react";
+
+import { setCookie } from "@/utils/index";
 
 export function LanguageBar() {
   const router = useRouter();

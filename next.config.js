@@ -5,9 +5,9 @@ const { i18n } = require("./next-i18next.config");
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  env: {
-    PATH_URL: process.env.PATH_URL
-  },
+  // env: {
+  //   PATH_URL: process.env.PATH_URL
+  // },
   images: {
     // domains: ["http2.mlstatic.com"]
   },

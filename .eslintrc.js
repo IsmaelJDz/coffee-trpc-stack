@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module"
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "simple-import-sort"],
   rules: {
     quotes: ["error", "double"],
     semi: ["error", "always", { omitLastInOneLineBlock: true }],
@@ -29,14 +29,23 @@ module.exports = {
         ignoreUrls: true
       }
     ],
-    "sort-imports": [
+    // "sort-imports": [
+    //   "warn",
+    //   {
+    //     ignoreCase: false,
+    //     ignoreDeclarationSort: false,
+    //     ignoreMemberSort: false,
+    //     memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
+    //     allowSeparatedGroups: false
+    //   }
+    // ],
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": [
       "warn",
       {
-        ignoreCase: false,
-        ignoreDeclarationSort: false,
-        ignoreMemberSort: false,
-        memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
-        allowSeparatedGroups: false
+        groups: [["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
       }
     ],
     "import/no-duplicates": [

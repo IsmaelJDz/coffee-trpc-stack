@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useModal } from "@/hooks/index";
-import { Modal } from "@/components/ui/index";
+import React, { useState } from "react";
+// import { useModal } from "@/hooks/index";
+// import { Modal } from "@/components/ui/index";
 import { FiMenu, FiX } from "react-icons/fi";
 
 // TODO: Add dark/light mode
@@ -15,15 +14,15 @@ export const Header = () => {
 
   const handleClick = () => toggleMenuState(!isOpen);
   const closeMobileMenu = () => toggleMenuState(false);
-  const { show: showModal, toggle: toggleModal, close: closeModal } = useModal();
+  // const { show: showModal, toggle: toggleModal, close: closeModal } = useModal();
 
   const signIn = () => {
-    router.push("/signin-and-signup");
+    router.push("/auth/login");
   };
 
   return (
-    <header className="sticky lg:relative top-0 z-10 h-20 bg-white shadow-header shadow-gray-200 lg:w-full lg:py-0 lg:px-5">
-      <div className="flex w-10/12 m-auto items-center max-w-7xl justify-items-center">
+    <header className="sticky top-0 z-10 h-20 bg-white lg:relative shadow-header shadow-gray-200 lg:w-full lg:py-0 lg:px-5">
+      <div className="flex items-center w-10/12 m-auto max-w-7xl justify-items-center">
         <Link href="/">
           <a onClick={() => {}} className="mr-auto">
             <figure className="m-0">
@@ -36,31 +35,31 @@ export const Header = () => {
           <ul
             className={`
               ${isOpen ? "left-0 transition-all duration-300" : "-left-full transition-all duration-300"}
-              flex w-full bg-slate-400
-              lg:transition-none
+              flex w-full
+              lg:transition-none backdrop-blur supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75
               top-20 h-[calc(92vh+10px)] md:h-[calc(92vh+10px)]
               lg:items-center justify-center lg:h-0
               flex-col absolute lg:static lg:flex-row uppercase font-medium`}
           >
-            <li className="py2 border-b-2 border-sky-500 lg:border-0" onClick={closeMobileMenu}>
-              <a href="" className="text-center px-8 w-full table hover:text-primary my-8">
+            <li className="border-b-2 py2 border-sky-500 lg:border-0" onClick={closeMobileMenu}>
+              <a href="" className="table w-full px-8 my-8 text-center hover:text-primary">
                 Inicio
               </a>
             </li>
             <Link href="/">
-              <li className="py2 border-b-2 border-sky-500 lg:border-0">
-                <a href="" className="text-center px-8 w-full table hover:text-primary my-8">
+              <li className="border-b-2 py2 border-sky-500 lg:border-0">
+                <a href="" className="table w-full px-8 my-8 text-center hover:text-primary">
                   Menú
                 </a>
               </li>
             </Link>
-            <li className="py2 border-b-2 border-sky-500 lg:border-0">
-              <a href="" className="text-center px-8 w-full table hover:text-primary my-8">
+            <li className="border-b-2 py2 border-sky-500 lg:border-0">
+              <a href="" className="table w-full px-8 my-8 text-center hover:text-primary">
                 Tiendas
               </a>
             </li>
-            <li className="py2 border-b-2 border-sky-500 lg:border-0">
-              <a href="" className="text-center px-8 w-full table hover:text-primary my-8">
+            <li className="border-b-2 py2 border-sky-500 lg:border-0">
+              <a href="" className="table w-full px-8 my-8 text-center hover:text-primary">
                 Conócenos
               </a>
             </li>
@@ -68,7 +67,7 @@ export const Header = () => {
         </nav>
         <div className="">
           <button
-            className="my-0 mx-5 bg-primary-green border-0 rounded-3xl py-2 px-7 text-white hover:bg-light-green-A750 transition-all"
+            className="py-2 mx-5 my-0 text-white transition-all border-0 bg-primary-green rounded-3xl px-7 hover:bg-light-green-A750"
             onClick={() => signIn()}
           >
             Iniciar sesión
