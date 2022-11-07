@@ -12,9 +12,9 @@ import { useAuthContext } from "@/context/index";
  * @returns Component -> Principal
  */
 
-// TODO: Register/Login page layout, Button component
-// TODO: Auth / Login --> Models, DB, Roles, HOC form
-// TODO: checks context with trpc, validate password secure
+// TODO: Register/Login page layout
+// TODO: Auth / Login --> Models, DB, Roles[Multi], Error login[showMessage]
+// TODO: validate password secure, fix password rules, forgot password
 
 export default function Main() {
   const { data } = useSession();

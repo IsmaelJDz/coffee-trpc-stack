@@ -1,0 +1,12 @@
+export const ADMIN = "admin";
+export const USERS_ADMIN = "users_admin";
+export const USERS_SUPER_ADMIN = "users_super_admin";
+export const QUESTIONS_ADMIN = "questions_admin";
+export const CURING_ADMIN = "curing_admin";
+export const CURING_SUPER_ADMIN = "curing_super_admin";
+export const COMPLIANCE_ADMIN = "compliance_admin";
+export const COMPLIANCE_SUPER_ADMIN = "compliance_super_admin";
+export const PRODUCT_ADMIN_ROLE = "products_admin";
+export const SUPER_ADMIN = "super_admin";
+export const PUSH_NOTIFICATIONS_SUPER_ADMIN = "push_notifications_super_admin";
+export const PURCHASES_ADMIN = "purchases_admin";

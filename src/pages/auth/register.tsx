@@ -4,9 +4,11 @@ import { useRouter } from "next/router";
 import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 import { AuthLayout } from "@/components/layout";
-// import { useAppContext } from "@/context/Main/index";
+import { AdvancedInput } from "@/components/ui/input";
+import { PasswordRules } from "@/components/ui/password/PasswordRules";
 import { CreateUserInput } from "@/schema/user.schema";
 import { trpc } from "@/utils/trpc";
 
@@ -14,12 +16,15 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting }
   } = useForm<CreateUserInput>();
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [showError, setShowError] = useState(false);
   const router = useRouter();
 
   const { mutateAsync, error } = trpc.useMutation(["users.register-user"]);
+  const passwordValue = watch("password");
 
   const onRegisterUser = async (data: CreateUserInput) => {
     const { name, email, password } = data;
@@ -37,6 +42,10 @@ export default function RegisterPage() {
     }
 
     await signIn("credentials", { email, password });
+  };
+
+  const onShowPassword = () => {
+    setIsPasswordVisible(!isPasswordVisible);
   };
 
   console.log("errors", errors);
@@ -67,9 +76,28 @@ export default function RegisterPage() {
               <input type="email" placeholder="Email" {...register("email")} name="email" />
             </div>
 
-            <div>
-              <input type="password" placeholder="Contraseña" {...register("password")} name="password" />
-            </div>
+            <AdvancedInput
+              {...register("password")}
+              error={errors.password?.message}
+              invalid={!!errors.password?.message}
+              id="password"
+              name="password"
+              placeholder="Password"
+              type={isPasswordVisible ? "text" : "password"}
+              label={
+                <>
+                  <span>Contraseña</span>
+                  <PasswordRules password={passwordValue} />
+                </>
+              }
+              endIcon={
+                isPasswordVisible ? (
+                  <AiFillEye size="21" className="text-gray-600" onClick={onShowPassword} />
+                ) : (
+                  <AiFillEyeInvisible size="21" className="text-gray-600" onClick={onShowPassword} />
+                )
+              }
+            />
             <div>
               <button type="submit" className="circular-btn" disabled={isSubmitting}>
                 Ingresar

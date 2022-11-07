@@ -1,12 +1,13 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 
 import { checkEmailPassword, verifyOauthUser } from "@/server/callbacks-server/user";
+
 export default NextAuth({
-  // Configure one or more authentication providers
+  debug: process.env.NODE_ENV === "development",
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || "",
@@ -20,8 +21,8 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
     }),
-    Credentials({
-      name: "Custom Login",
+    CredentialsProvider({
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Email" },
         password: {
@@ -37,8 +38,11 @@ export default NextAuth({
   ],
   pages: {
     signIn: "/auth/login",
-    newUser: "/auth/register"
+    newUser: "/auth/register",
+    error: "/auth/error"
   },
+  secret: process.env.AUTH_JWT_SECRET,
+  jwt: {},
   session: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     strategy: "jwt",
@@ -46,15 +50,10 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, account, user }) {
-      console.log("token 1", token); // eslint-disable-line
-      console.log("account 1", account);
-      console.log("user 1", user); // eslint-disable-line
-
       if (account) {
         token.accessToken = account.access_token;
         switch (account.type) {
           case "oauth":
-            // Create o verify user exists in your database
             token.user = await verifyOauthUser(user?.email || "", user?.name || "");
             break;
 
@@ -66,11 +65,7 @@ export default NextAuth({
 
       return token;
     },
-    async session({ session, token, user }) {
-      console.log("token 2", token); // eslint-disable-line
-      console.log("session 1", session);
-      console.log("user 1", user); // eslint-disable-line
-
+    async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user = token.user as any;
 

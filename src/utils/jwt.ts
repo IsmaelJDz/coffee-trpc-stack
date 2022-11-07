@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.JWT_SECRET || "secretKokiriForestTwo";
+const SECRET = process.env.JWT_SECRET || "secretKokiriForest";
 
 export function signJwt(id: number, email: string) {
   if (!process.env.JWT_SECRET) {

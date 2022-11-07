@@ -54,6 +54,8 @@ module.exports = {
         considerQueryString: true
       }
     ],
+    // "multiline-ternary": ["warn", "never"],
+    "multiline-ternary": "off",
     "no-undef": "warn",
     "n/handle-callback-err": "warn",
     "@typescript-eslint/no-empty-interface": "warn"

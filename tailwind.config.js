@@ -27,6 +27,7 @@ module.exports = {
           default: "#03BFB6",
           400: "#28B99A"
         },
+        "secondary-green": "#00a862",
         "secondary-purple": "#8B8CFF",
         "secondary-orange": "#FFA349",
         "secondary-blue": "#311FFF",
@@ -365,6 +366,17 @@ module.exports = {
         black: "#000000",
         white: "#FFFFFF"
       },
+      backgroundPosition: {
+        bottom: "bottom",
+        center: "center",
+        left: "left",
+        "left-bottom": "left bottom",
+        "left-top": "left top",
+        right: "right",
+        "right-bottom": "right bottom",
+        "right-top": "right top",
+        top: "top"
+      },
       boxShadow: {
         xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",
         sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
@@ -383,7 +395,47 @@ module.exports = {
       container: {
         "2xl": "1440px",
         "3xl": "1600px"
-      }
+      },
+      transformOrigin: {
+        center: "center",
+        top: "top",
+        "top-right": "top right",
+        right: "right",
+        "bottom-right": "bottom right",
+        bottom: "bottom",
+        "bottom-left": "bottom left",
+        left: "left",
+        "top-left": "top left"
+      },
+      scale: {
+        0: "0",
+        50: ".5",
+        75: ".75",
+        90: ".9",
+        95: ".95",
+        100: "1",
+        105: "1.05",
+        110: "1.1",
+        125: "1.25",
+        150: "1.5"
+      },
+      rotate: {
+        "-180": "-180deg",
+        "-90": "-90deg",
+        "-45": "-45deg",
+        0: "0",
+        45: "45deg",
+        90: "90deg",
+        180: "180deg"
+      },
+      translate: (theme, { negative }) => ({
+        ...theme("spacing"),
+        ...negative(theme("spacing")),
+        "-full": "-100%",
+        "-1/2": "-50%",
+        "1/2": "50%",
+        full: "100%"
+      })
     }
   },
   plugins: []

@@ -1,1 +1,2 @@
-export { Button } from "./Button";
+export { AdvancedButton } from "./Button";
+export { SocialButtons } from "./SocialButtons";

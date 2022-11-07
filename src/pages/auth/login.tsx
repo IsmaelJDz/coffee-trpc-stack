@@ -1,11 +1,21 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { GetServerSideProps } from "next";
+import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { getProviders, getSession, signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { getSession, signIn } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import { AuthLayout } from "@/components/layout";
+import { AdvancedButton, SocialButtons } from "@/components/ui/button";
+import { Divider } from "@/components/ui/divider";
+import { AdvancedInput } from "@/components/ui/input";
+import { ACCESS_DENIED } from "@/constants/common";
+import { registerSchema } from "@/schema/frontend/register";
+// import { AdvancedSpacing } from "@/components/ui/spacing";
+// import useRolePermission from '@hooks/global/useRolePermission';
 
 type InputsForm = {
   email: string;
@@ -18,37 +28,48 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
-  } = useForm<InputsForm>();
+  } = useForm<InputsForm>({
+    resolver: yupResolver(registerSchema()),
+    mode: "onTouched"
+  });
   const [showError, setShowError] = useState(false);
-
-  const [providers, setProviders] = useState<any>({});
+  // useRolePermission({ roles: [CATEGORY_MANAGEMENT_ADMIN, CATEGORY_MANAGEMENT_ASSETS_ADMIN], redirect: '/' });
 
   const onLoginUser = async (data: InputsForm) => {
     setShowError(false);
 
     await signIn("credentials", {
       email: data.email,
-      password: data.password
-    });
+      password: data.password,
+      redirect: false
+    })
+      .then(data => {
+        console.log("data", data);
+        // router.push("/");
+      })
+      .catch(() => {
+        // setShowError(true);
+        // setTimeout(() => {
+        //   setShowError(false);
+        // }, 3000);
+        toast.error(ACCESS_DENIED, {
+          duration: 5000
+        });
+      });
   };
-
-  useEffect(() => {
-    getProviders().then(prov => {
-      setProviders(prov);
-    });
-  }, []);
-
-  console.log("errors", errors);
 
   return (
     <AuthLayout title="Ingresar">
-      <form onSubmit={handleSubmit(onLoginUser)} noValidate>
-        <div>
-          <div>
-            <div>
-              <h1>Iniciar sesión</h1>
-              {showError ? <p>Usuario ya existe</p> : null}
-              {/* {showError && (
+      <div className="flex w-full">
+        <div className="sm:w-full h-screen hidden relative xl:block">
+          <Image src="/images/coffee2.jpeg" priority className="" layout="fill" objectFit="fill" />
+        </div>
+
+        <div className="w-full h-screen flex flex-col justify-center items-center">
+          <div className="mb-4 font-bold text-primary text-xl">
+            <h1>Iniciar sesión</h1>
+            {showError ? <p>Usuario ya existe</p> : null}
+            {/* {showError && (
                 <Chip
                   label="User not found"
                   color="error"
@@ -56,52 +77,85 @@ export default function LoginPage() {
                   className="fadeIn"
                 />
               )} */}
-              {/* <Chip
+            {/* <Chip
                 label="User not found"
                 color="error"
                 icon={<ErrorOutline />}
                 className="fadeIn"
                 sx={{ display: showError ? "flex" : "none" }}
               /> */}
-            </div>
+          </div>
+          <SocialButtons />
 
-            <div>
-              <input type={"email"} placeholder={"Email"} {...register("email")} />
-            </div>
+          <div className="w-2/4 my-4">
+            <Divider message="Or" />
+          </div>
 
-            <div>
-              <input type="password" placeholder="Contrasena" {...register("password")} />
-            </div>
-            <div>
-              <button type="submit" disabled={isSubmitting}>
-                Ingresar
-              </button>
-            </div>
+          <div className="w-2/4">
+            <form onSubmit={handleSubmit(onLoginUser)} noValidate>
+              {/* <AdvancedSpacing size={2} /> */}
 
-            <div>
-              <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : "/auth/register"} passHref>
-                <a>No tienes cuenta?</a>
-              </NextLink>
-            </div>
+              <div className="flex flex-row justify-between mb-5">
+                <div className="flex flex-col w-full">
+                  <label htmlFor="description" className="flex mb-2 font-semibold">
+                    Email
+                  </label>
+                  <AdvancedInput
+                    {...register("email")}
+                    error={errors.email?.message}
+                    invalid={!!errors.email?.message}
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                  />
+                </div>
+              </div>
 
-            <div>
-              {Object.values(providers).map((provider: any) => {
-                if (provider.id === "credentials") return <div key="credentials"></div>;
+              <div className="flex flex-row justify-between mb-5">
+                <div className="flex flex-col w-full">
+                  <label htmlFor="description" className="flex mb-2 font-semibold">
+                    Password
+                  </label>
+                  <AdvancedInput
+                    type="password"
+                    {...register("password")}
+                    error={errors.password?.message}
+                    invalid={!!errors.password?.message}
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                </div>
+              </div>
 
-                return (
-                  <button
-                    className="px-2 flex flex-col bg-slate-300 w-full py-2 rounded-md text-white text-sm font-medium items-center my-2"
-                    key={provider.id}
-                    onClick={() => signIn(provider.id)}
-                  >
-                    {provider.name}
-                  </button>
-                );
-              })}
-            </div>
+              {/* <Permission roles={[SUPER_ADMIN, DISCOUNT_CODES_ADMIN]}>
+                {addNewCategory && <FiPlusCircle size="16" className="absolute w-8 h-8 text-primary centerIcon" />}
+              </Permission> */}
+
+              <div>
+                <AdvancedButton
+                  color="primary"
+                  type="submit"
+                  text="Ingresar"
+                  className="w-32"
+                  loading={isSubmitting}
+                  disabled={isSubmitting}
+                  spinnerText={"Ingresando..."}
+                />
+              </div>
+
+              <div className="flex justify-between mt-3">
+                <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : "/auth/register"} passHref>
+                  <a>No tienes cuenta?</a>
+                </NextLink>
+                <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : "/auth/register"} passHref>
+                  <a>Olvidaste tu password?</a>
+                </NextLink>
+              </div>
+            </form>
           </div>
         </div>
-      </form>
+      </div>
     </AuthLayout>
   );
 }

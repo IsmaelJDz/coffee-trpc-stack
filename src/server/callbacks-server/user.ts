@@ -3,9 +3,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/utils/prisma";
 
 export const checkEmailPassword = async (email: string, password: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-
-  console.log("user 1", user); // eslint-disable-line
+  const user = await prisma.user.findFirst({ where: { email } });
 
   if (!user) {
     return null;
@@ -16,6 +14,10 @@ export const checkEmailPassword = async (email: string, password: string) => {
   if (!isMatch) {
     return null;
   }
+
+  // if (!bcrypt.compareSync(password, user.password)) {
+  //   return null;
+  // }
 
   const { id, name, email: emailDbUser, role } = user;
 
@@ -29,8 +31,6 @@ export const checkEmailPassword = async (email: string, password: string) => {
 
 export const verifyOauthUser = async (oAuthEmail: string, oAuthName: string) => {
   const user = await prisma.user.findUnique({ where: { email: oAuthEmail } });
-
-  console.log("user 2", user);
 
   if (user) {
     const { id, name, email, role } = user;
