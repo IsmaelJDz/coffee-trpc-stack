@@ -3,11 +3,47 @@ import * as Yup from "yup";
 
 const REQUIRED_FIELD = "This field is required";
 
+type ParentProps = {
+  parent: {
+    name: string;
+    email: string;
+    password: string;
+  };
+};
+
+export const getInitialValues = () => ({
+  name: "",
+  email: "",
+  password: ""
+});
+
 export const registerSchema = () => {
   return Yup.object().shape({
+    name: Yup.string().required(REQUIRED_FIELD),
     email: Yup.string().email().required(REQUIRED_FIELD),
-    password: Yup.string().min(8).required(REQUIRED_FIELD)
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(|(?=.*_))[^ ]+$/, {
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      })
+      .test("Password", "Password can't be name or last name", (value: string | undefined, { parent }: ParentProps) => {
+        if (!parent || !value) return false;
+        const { name } = parent;
+
+        const passwordAllowed = passwordContainsUserData(value, name);
+        return !passwordAllowed;
+      })
   });
+};
+
+const passwordContainsUserData = (password: string, name: string) => {
+  // if (!name || !lastName) return false;
+  if (!name) return false;
+  return password.toLowerCase().includes(name.replace(/\s/g, "").toLowerCase());
+  // password.toLowerCase().includes(firstName.replace(/\s/g, "").toLowerCase()) ||
+  // password.toLowerCase().includes(lastName.replace(/\s/g, "").toLowerCase())
 };
 
 // const REQUIRED_FIELD = 'This field is required';
@@ -46,33 +82,3 @@ export const registerSchema = () => {
 //     discountPercentage: yup.string().required(REQUIRED_FIELD),
 //   });
 // };
-
-// password: Yup.string()
-//         .required(TR.PASSWORD_ERROR_REQUIRED)
-//         .min(8, TR.PASSWORD_ERROR)
-//         .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(|(?=.*_))[^ ]+$/, {
-//           message: TR.PASSWORD_ERROR,
-//         })
-//         .test(TR.PASSWORD, TR.PASSWORD_CHECKS_NAMES, (value, { parent }) => {
-//           if (!parent || !value) return false;
-//           const { first_name, last_name } = parent;
-
-//           const passwordAllowed = passwordContainsUserData(
-//             value,
-//             first_name,
-//             last_name
-//           );
-//           return !passwordAllowed;
-//         }),
-
-// const passwordContainsUserData = (password, firstName, lastName) => {
-//   if (!firstName || !lastName) return false;
-//   return (
-//     password
-//       .toLowerCase()
-//       .includes(firstName.replace(/\s/g, "").toLowerCase()) ||
-//     password.toLowerCase().includes(lastName.replace(/\s/g, "").toLowerCase())
-//   );
-// };
-
-// export { getInitialValues, getSchema };

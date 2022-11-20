@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { GetServerSideProps } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -7,10 +8,13 @@ import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 import { AuthLayout } from "@/components/layout";
+import { Alert } from "@/components/ui/alert";
 import { AdvancedInput } from "@/components/ui/input";
 import { PasswordRules } from "@/components/ui/password/PasswordRules";
+import { getInitialValues, registerSchema } from "@/schema/frontend/register";
 import { CreateUserInput } from "@/schema/user.schema";
 import { trpc } from "@/utils/trpc";
+// import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const {
@@ -18,47 +22,57 @@ export default function RegisterPage() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting }
-  } = useForm<CreateUserInput>();
+  } = useForm<CreateUserInput>({
+    resolver: yupResolver(registerSchema()),
+    mode: "onTouched",
+    defaultValues: getInitialValues()
+  });
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [showError, setShowError] = useState(false);
   const router = useRouter();
 
-  const { mutateAsync, error } = trpc.useMutation(["users.register-user"]);
+  const { mutate } = trpc.useMutation(["users.register-user"]);
   const passwordValue = watch("password");
 
   const onRegisterUser = async (data: CreateUserInput) => {
     const { name, email, password } = data;
 
-    await mutateAsync({ name, email, password });
-
     setShowError(false);
 
-    if (error) {
-      setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 3000);
-      return;
-    }
+    mutate(
+      { name, email, password },
+      {
+        onSuccess: async ({ user }) => {
+          if (user) {
+            await signIn("credentials", { email, password });
+          }
+        },
+        onError: errorMessage => {
+          console.log("errorMessage", errorMessage.message);
 
-    await signIn("credentials", { email, password });
+          setShowError(true);
+          setTimeout(() => {
+            setShowError(false);
+          }, 3000);
+        }
+      }
+    );
   };
 
   const onShowPassword = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  console.log("errors", errors);
-
   return (
     <AuthLayout title="Ingresar">
-      {error && <div>{error.message}</div>}
+      {/* {error && <div>{error.message}</div>} */}
       <form onSubmit={handleSubmit(onRegisterUser)} noValidate>
         <div>
           <div>
             <div>
               <h1>Crear cuenta</h1>
-              {showError ? <p>Usuario ya existe</p> : null}
+              {/* {showError ? <p>Usuario ya existe</p> : null} */}
+              {showError ? <Alert message="El usuario ya existe" autoHidden type="error" /> : null}
               {/* <Chip
                 label="User already exists"
                 color="error"
@@ -68,12 +82,43 @@ export default function RegisterPage() {
               /> */}
             </div>
 
-            <div>
+            {/* <div>
               <input type="text" placeholder="Nombre" {...register("name")} name="name" />
+            </div> */}
+            <div className="flex flex-row justify-between mb-5">
+              <div className="flex flex-col w-full">
+                <label htmlFor="description" className="flex mb-2 font-semibold">
+                  Name
+                </label>
+                <AdvancedInput
+                  {...register("name")}
+                  error={errors.name?.message}
+                  invalid={!!errors.name?.message}
+                  id="name"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
             </div>
 
-            <div>
+            {/* <div>
               <input type="email" placeholder="Email" {...register("email")} name="email" />
+            </div> */}
+
+            <div className="flex flex-row justify-between mb-5">
+              <div className="flex flex-col w-full">
+                <label htmlFor="description" className="flex mb-2 font-semibold">
+                  Email
+                </label>
+                <AdvancedInput
+                  {...register("email")}
+                  error={errors.email?.message}
+                  invalid={!!errors.email?.message}
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
             </div>
 
             <AdvancedInput

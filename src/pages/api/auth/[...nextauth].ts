@@ -7,7 +7,7 @@ import SpotifyProvider from "next-auth/providers/spotify";
 import { checkEmailPassword, verifyOauthUser } from "@/server/callbacks-server/user";
 
 export default NextAuth({
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || "",

@@ -1,0 +1,48 @@
+.talk-bubble {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: auto;
+  background-color: #03bfb6;
+}
+
+.triangle.left-top:after {
+  content: " ";
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -20px;
+  right: auto;
+  top: -5px;
+  bottom: auto;
+  border: 30px solid;
+  border-color: #03bfb6 transparent transparent transparent;
+  transform: rotate(20deg);
+}
+
+.triangle.right-top:before {
+  content: " ";
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: auto;
+  right: -20px;
+  top: -5px;
+  bottom: auto;
+  border: 30px solid;
+  border-color: #03bfb6 transparent transparent transparent;
+  transform: rotate(-20deg);
+}
+
+.talktext {
+  color: white;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.alert-absolute {
+  position: absolute;
+  top: 130px;
+  right: 60px;
+  z-index: 20;
+}

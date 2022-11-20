@@ -9,11 +9,12 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { AuthLayout } from "@/components/layout";
+import { Alert } from "@/components/ui/alert";
 import { AdvancedButton, SocialButtons } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
 import { AdvancedInput } from "@/components/ui/input";
 import { ACCESS_DENIED } from "@/constants/common";
-import { registerSchema } from "@/schema/frontend/register";
+import { loginSchema } from "@/schema/frontend/login";
 // import { AdvancedSpacing } from "@/components/ui/spacing";
 // import useRolePermission from '@hooks/global/useRolePermission';
 
@@ -29,7 +30,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<InputsForm>({
-    resolver: yupResolver(registerSchema()),
+    resolver: yupResolver(loginSchema()),
     mode: "onTouched"
   });
   const [showError, setShowError] = useState(false);
@@ -44,31 +45,43 @@ export default function LoginPage() {
       redirect: false
     })
       .then(data => {
-        console.log("data", data);
-        // router.push("/");
-      })
-      .catch(() => {
         // setShowError(true);
         // setTimeout(() => {
         //   setShowError(false);
         // }, 3000);
-        toast.error(ACCESS_DENIED, {
-          duration: 5000
-        });
+
+        if (data?.status === 200 && data?.ok) {
+          router.push("/");
+        }
+
+        if (data?.status === 401 && !data?.ok) {
+          toast.error(ACCESS_DENIED, {
+            duration: 5000
+          });
+        }
+
+        // router.push("/");
+      })
+      .catch(errorResponse => {
+        console.error(errorResponse);
       });
   };
 
   return (
     <AuthLayout title="Ingresar">
       <div className="flex w-full">
-        <div className="sm:w-full h-screen hidden relative xl:block">
+        <div className="relative hidden h-screen sm:w-full xl:block">
           <Image src="/images/coffee2.jpeg" priority className="" layout="fill" objectFit="fill" />
         </div>
 
-        <div className="w-full h-screen flex flex-col justify-center items-center">
-          <div className="mb-4 font-bold text-primary text-xl">
+        <div className="flex flex-col items-center justify-center w-full h-screen">
+          {/* <span className="flex w-3 h-3">
+            <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
+            <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
+          </span> */}
+          <div className="mb-4 text-xl font-bold text-primary">
             <h1>Iniciar sesión</h1>
-            {showError ? <p>Usuario ya existe</p> : null}
+            {showError ? <Alert message="El usuario ya existe" autoHidden type="error" /> : null}
             {/* {showError && (
                 <Chip
                   label="User not found"

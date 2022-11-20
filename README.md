@@ -18,7 +18,6 @@
 - Next.js
 - TailwindCSS
 - Typescript
-- Tailwind CSS
 - React Hook Form
 - React Query
 - React Icons

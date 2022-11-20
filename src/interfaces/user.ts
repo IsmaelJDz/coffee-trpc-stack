@@ -15,3 +15,10 @@ export type ISetUser = {
   role: string;
   token: string;
 };
+
+export type IUser = {
+  email: string;
+  id: number;
+  name: string;
+  roles: string[];
+};

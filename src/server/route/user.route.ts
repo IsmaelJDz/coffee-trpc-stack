@@ -3,6 +3,7 @@ import * as trpc from "@trpc/server";
 import bcrypt from "bcryptjs";
 
 import { createUserOutputSchema, createUserSchema } from "@/schema/user.schema";
+import { Queries } from "@/server/queries/index";
 import { isValidEmail } from "@/utils/common";
 import { jwt } from "@/utils/index";
 
@@ -51,13 +52,24 @@ export const userRouter = createRoute().mutation("register-user", {
       const { id } = user;
       const token = jwt.signJwt(id, email);
 
+      await ctx.prisma.roles_user.create({
+        data: {
+          userId: id,
+          roleId: 1
+        }
+      });
+
+      const userWithRol = await Queries.rolesUser(id);
+
+      const { id: userId, rol, name: userName, email: userEmail, password: userPassword } = userWithRol[0];
+
       return {
         user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          password: user.password,
+          id: userId,
+          name: userName,
+          email: userEmail,
+          role: rol,
+          password: userPassword,
           token
         }
       };

@@ -1,0 +1,4 @@
+// TODO: Register/Login page layout, change button iniciar session cuando ya hay una session iniciada
+// TODO: forgot password, reset password, change password[profile]
+// TODO: Create Custom Alert component to show errors, success, info, warning
+// TODO: Complete Alert component

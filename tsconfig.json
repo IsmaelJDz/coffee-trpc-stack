@@ -27,6 +27,6 @@
       "@/hooks/*": ["src/hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/ErrorBoundinary.jsx"],
   "exclude": ["node_modules"]
 }

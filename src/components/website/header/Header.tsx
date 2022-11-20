@@ -1,20 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 // import { useModal } from "@/hooks/index";
 // import { Modal } from "@/components/ui/index";
 import { FiMenu, FiX } from "react-icons/fi";
 
+import { Avatar } from "@/components/ui/profile-avatar";
+
 // TODO: Add dark/light mode
 
 export const Header = () => {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [isOpen, toggleMenuState] = useState<boolean>(false);
 
   const handleClick = () => toggleMenuState(!isOpen);
   const closeMobileMenu = () => toggleMenuState(false);
   // const { show: showModal, toggle: toggleModal, close: closeModal } = useModal();
+
+  if (status === "loading") {
+    return null;
+  }
 
   const signIn = () => {
     router.push("/auth/login");
@@ -66,12 +74,16 @@ export const Header = () => {
           </ul>
         </nav>
         <div className="">
-          <button
-            className="py-2 mx-5 my-0 text-white transition-all border-0 bg-primary-green rounded-3xl px-7 hover:bg-light-green-A750"
-            onClick={() => signIn()}
-          >
-            Iniciar sesión
-          </button>
+          {status === "authenticated" ? (
+            <Avatar user={session.user} />
+          ) : (
+            <button
+              className="py-2 mx-5 my-0 text-white transition-all border-0 bg-primary-green rounded-3xl px-7 hover:bg-light-green-A750"
+              onClick={() => signIn()}
+            >
+              Iniciar sesión
+            </button>
+          )}
         </div>
         {/* <DarkLightMode /> */}
         {/* <Modal size="md" show={showModal} onClose={closeModal}>

@@ -10,9 +10,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
+// enum Roles {
+//   USER
+//   ADMIN
+//   CLIENT
+// }
+
+// TODO: change relation between roles_user and role
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String
+  // roleId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Roles_user Roles_user? @relation(fields: [id], references: [id])
+  // roles_userId Int?
+}
+
+model Roles_user {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  roleId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  // Role Role[]
 }
 
 model User {
@@ -20,7 +46,9 @@ model User {
   email     String   @unique
   name      String
   password  String
-  role      Role     @default(USER)
+  // role      Role     @default(CLIENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Roles_user Roles_user[]
 }
