@@ -1,6 +1,6 @@
 # tRPC with Next.js, TypeScript & Prisma
 
-![Captura de la app](src/public/images/trpc.jpeg)
+![Captura de la app](public/images/trpc.jpeg)
 
 ## Why you should be learning & using tRPC
 

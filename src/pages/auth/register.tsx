@@ -9,7 +9,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 import { AuthLayout } from "@/components/layout";
 import { Alert } from "@/components/ui/alert";
-import { AdvancedButton, SocialButtons } from "@/components/ui/button";
+import { AdvancedButton } from "@/components/ui/button";
 import { AdvancedInput } from "@/components/ui/input";
 import { PasswordRules } from "@/components/ui/password/PasswordRules";
 import { getInitialValues, registerSchema } from "@/schema/frontend/register";
