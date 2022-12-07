@@ -9,6 +9,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 import { AuthLayout } from "@/components/layout";
 import { Alert } from "@/components/ui/alert";
+import { AdvancedButton, SocialButtons } from "@/components/ui/button";
 import { AdvancedInput } from "@/components/ui/input";
 import { PasswordRules } from "@/components/ui/password/PasswordRules";
 import { getInitialValues, registerSchema } from "@/schema/frontend/register";
@@ -143,10 +144,17 @@ export default function RegisterPage() {
                 )
               }
             />
+
             <div>
-              <button type="submit" className="circular-btn" disabled={isSubmitting}>
-                Ingresar
-              </button>
+              <AdvancedButton
+                color="primary"
+                type="submit"
+                text="Ingresar"
+                className="w-32"
+                loading={isSubmitting}
+                disabled={isSubmitting}
+                spinnerText={"Ingresando..."}
+              />
             </div>
 
             <div>
