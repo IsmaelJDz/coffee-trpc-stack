@@ -2,6 +2,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { Layout } from "@/components/layout/index";
+import { Carousel } from "@/components/website/";
 // import { Home } from "@/components/ui/Home";
 
 /**
@@ -16,9 +17,8 @@ export default function Main() {
   return (
     <Layout title="Coffee Shop">
       {/* <p>{`${t("ourCoffee")}!`}</p> */}
-      <h1>OurCoffee</h1>
-      {/* <Carousel />
-      <Info />
+      <Carousel />
+      {/* <Info />
       <About />
       <AdCookie /> */}
     </Layout>

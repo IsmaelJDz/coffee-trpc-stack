@@ -33,6 +33,9 @@ module.exports = {
         "secondary-blue": "#311FFF",
         "secondary-yellow": "#F7BE38",
         "secondary-red": "#FF5A72",
+        "carousel-rgba": " rgba(0, 0, 0, 0)",
+        "carousel-rgba-one": " rgba(46, 52, 58, 0.3)",
+        "carousel-rgba-second": " rgba(7, 7, 7, 0.8)",
         red: {
           50: "#ffebee",
           100: "#ffcdd2",
@@ -435,7 +438,10 @@ module.exports = {
         "-1/2": "-50%",
         "1/2": "50%",
         full: "100%"
-      })
+      }),
+      backgroundImage: {
+        "carousel-pattern": "url('/img/coffee14.jpg')"
+      }
     }
   },
   plugins: []
